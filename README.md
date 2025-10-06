@@ -15,17 +15,40 @@ This project aims to show how nix can integrate into the software-development wo
 
 ## Getting Started
 
-Installing nix
-
 ### Prerequisites
 
-Cloning the repo
+Steps 2 and 3 are optional but recommended
+
+1. [Installing nix](https://nixos.org/download/)
+1. [Installing home-manager](https://home-manager.dev/manual/24.11/index.xhtml#ch-installation)
+1. Installing direnv through home-manager
+
+```nix
+{
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
+  };
+}
+```
+
+4. Cloning the repo
 
 ```sh
-  git clone https://www.github.com/omega-800/nix-as-a-devtool
+# using git
+git clone https://www.github.com/omega-800/nix-as-a-devtool
+# alternatively, using nix with the template output of this repo's flake
+nix flake new --template github:omega-800/nix-as-a-devtool ./nix-as-a-devtool
 ```
 
 ## Usage
+
+- Formatting: `nix fmt`
+- Testing: `nix flake check`
+- Running: `nix run`
+- Building: `nix build`
+- Developing (if not using direnv): `nix develop`
+- Inspecting the flake: `nix flake show`
 
 ## Resources
 
@@ -38,7 +61,7 @@ Cloning the repo
 
 ## License
 
-Distributed under the baba yaga license. See `LICENSE.txt` for more information.
+Distributed under the baba yaga license. See [LICENSE.txt](LICENSE.txt) for more information.
 
 ## Acknowledgments
 
