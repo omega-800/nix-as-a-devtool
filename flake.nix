@@ -46,10 +46,11 @@
       # a helper function to map all the configurations to each system
       eachSystem = f: nixpkgs.lib.genAttrs systems (system: f (import nixpkgs { inherit system; }));
 
+      # our treefmt config
       treefmt = eachSystem (
         pkgs:
         treefmt-nix.lib.evalModule pkgs (_: {
-          # Used to find the project root
+          # used to find the project root
           projectRootFile = "flake.nix";
           programs = {
             # go formatter
@@ -117,7 +118,7 @@
           hooks = {
             # running go test
             gotest.enable = true;
-            # formatting
+            # the formatting config we declared before
             treefmt = {
               enable = true;
               packageOverrides.treefmt = treefmt.${pkgs.system}.config.build.wrapper;
