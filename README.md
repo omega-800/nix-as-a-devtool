@@ -1,10 +1,12 @@
+<div align="center">
+
 # Nix as a devtool
 
-<div align="center">
 [![nix](https://img.shields.io/static/v1?logo=nixos&color=415e9a&logoColor=D9E0EE&labelColor=699ad7&label=built%20with&message=nixpkgs&link=https%3A%2F%2Fgithub.com%2Fnixos%2Fnixpkgs)](https://github.com/nixos/nixpkgs)
 [![nix-github-actions](https://img.shields.io/static/v1?logo=nixos&color=415e9a&logoColor=D9E0EE&labelColor=699ad7&label=built%20with&message=nix-github-actions&link=https%3A%2F%2Fgithub.com%2Fnix-community%2Fnix-github-actions)](https://github.com/nix-community/nix-github-actions)
 [![git-hooks.nix](https://img.shields.io/static/v1?logo=nixos&color=415e9a&logoColor=D9E0EE&labelColor=699ad7&label=built%20with&message=pre-commit-hooks&link=https%3A%2F%2Fgithub.com%2Fcachix%2Fgit-hooks.nix)](https://github.com/cachix/git-hooks.nix)
 [![treefmt-nix](https://img.shields.io/static/v1?logo=nixos&color=415e9a&logoColor=D9E0EE&labelColor=699ad7&label=built%20with&message=treefmt-nix&link=https%3A%2F%2Fgithub.com%2Fnumtide%2Ftreefmt-nix)](https://github.com/numtide/treefmt-nix)
+
 </div>
 
 ## About
