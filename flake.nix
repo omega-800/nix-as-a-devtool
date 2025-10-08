@@ -60,7 +60,7 @@
             # markdown formatter
             mdformat.enable = true;
             # nix formatter
-            nixfmt-rfc-style.enable = true;
+            nixfmt.enable = true;
             # static linting for nix files
             statix.enable = false;
           };
