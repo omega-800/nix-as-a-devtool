@@ -9,6 +9,6 @@ func main() {
 	if os.Getenv("I_USE_DIRENV_BTW") == "1" {
 		fmt.Println("Welcome!")
 	} else {
-		fmt.Println("No direnv? :(")
+		fmt.Println("Hello world")
 	}
 }

@@ -41,6 +41,8 @@ git clone https://www.github.com/omega-800/nix-as-a-devtool
 nix flake new --template github:omega-800/nix-as-a-devtool ./nix-as-a-devtool
 ```
 
+Or you can just try it out in the [codespace](https://literate-guide-rpq69g9q9772696.github.dev/)
+
 ## Usage
 
 - Formatting: `nix fmt`

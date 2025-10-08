@@ -103,6 +103,12 @@
 
       # can be run through `nix run`
       apps = eachSystem (pkgs: rec {
+        # a cool presentation
+        presentation = {
+          type = "app";
+          program = "${pkgs.writeShellScript "presentation" "${pkgs.slides}/bin/slides ${./presentation.md}"}";
+        };
+        # our package
         my-app = {
           type = "app";
           program = "${self.packages.${pkgs.system}.my-package}/bin/nix-as-a-devtool";
@@ -111,46 +117,56 @@
       });
 
       # can be run through `nix flake check`
-      checks = eachSystem (pkgs: {
-        # will be run before each commit through including the shellHook in our devShell
-        pre-commit-check = pre-commit-hooks.lib.${pkgs.system}.run {
-          src = ./.;
-          hooks = {
-            # running go test
-            gotest.enable = true;
-            # the formatting config we declared before
-            treefmt = {
-              enable = true;
-              packageOverrides.treefmt = treefmt.${pkgs.system}.config.build.wrapper;
+      checks = eachSystem (
+        pkgs:
+        let
+          expectedOutput = "'Hello world'";
+        in
+        {
+          # will be run before each commit through including the shellHook in our devShell
+          pre-commit-check = pre-commit-hooks.lib.${pkgs.system}.run {
+            src = ./.;
+            hooks = {
+              # running go test
+              gotest.enable = true;
+              # the formatting config we declared before
+              treefmt = {
+                enable = true;
+                packageOverrides.treefmt = treefmt.${pkgs.system}.config.build.wrapper;
+              };
             };
           };
-        };
-
-        vm-test = pkgs.nixosTest {
-          name = "vm-test";
-          # python script to run inside of the vm
-          testScript = ''
-            result = machine.succeed("nix-as-a-devtool")
-            print(result)
+          # test with a simple shell script
+          simple-check = pkgs.runCommandLocal "simple-check" { } ''
+            ${self.packages.${pkgs.system}.my-package}/bin/nix-as-a-devtool | grep -q ${expectedOutput}
+            mkdir "$out"
           '';
-          # vm for isolated testing
-          nodes.my-vm =
-            { modulesPath, ... }:
-            {
-              imports = [ "${modulesPath}/virtualisation/qemu-vm.nix" ];
-              # setting a user
-              users.users.alice = {
-                isNormalUser = true;
-                initialPassword = "test";
-                extraGroups = [ "wheel" ];
+          # test inside a virtual machine
+          vm-test = pkgs.nixosTest {
+            name = "vm-test";
+            # python script to run inside of the vm
+            testScript = ''
+              result = machine.succeed("nix-as-a-devtool | grep -q ${expectedOutput}")
+            '';
+            # vm for isolated testing
+            nodes.my-vm =
+              { modulesPath, ... }:
+              {
+                imports = [ "${modulesPath}/virtualisation/qemu-vm.nix" ];
+                # setting a user
+                users.users.alice = {
+                  isNormalUser = true;
+                  initialPassword = "test";
+                  extraGroups = [ "wheel" ];
+                };
+                # adding our package to the vm
+                environment.systemPackages = [ self.packages.${pkgs.system}.my-package ];
+                boot.loader.grub.devices = [ "/dev/sda" ];
+                system.stateVersion = "25.05";
               };
-              # adding our package to the vm
-              environment.systemPackages = [ self.packages.${pkgs.system}.my-package ];
-              boot.loader.grub.devices = [ "/dev/sda" ];
-              system.stateVersion = "25.05";
-            };
-        };
-      });
+          };
+        }
+      );
 
       # can be run through `nix fmt`
       formatter = eachSystem (pkgs: treefmt.${pkgs.system}.config.build.wrapper);
