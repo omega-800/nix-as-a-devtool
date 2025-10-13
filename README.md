@@ -51,6 +51,9 @@ Or you can just try it out in the [codespace](https://literate-guide-rpq69g9q977
 - Building: `nix build`
 - Developing (if not using direnv): `nix develop`
 - Inspecting the flake: `nix flake show`
+- Applying home-manager: `home-manager switch --flake .#${your-system}`
+  - eg: `home-manager switch --flake .#x86_64-linux`
+- Using this repo as a template: `nix flake init --template github:omega-800/nix-as-a-devtool`
 
 ## Resources
 

@@ -23,6 +23,11 @@
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # home-manager
+    home-manager = {
+      url = "github:nix-community/home-manager/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   # here the fun part begins! in the outputs we declare what our flake produces
@@ -32,6 +37,7 @@
       treefmt-nix,
       pre-commit-hooks,
       nix-github-actions,
+      home-manager,
       self,
       ...
     }:
@@ -63,6 +69,11 @@
             nixfmt.enable = true;
             # static linting for nix files
             statix.enable = false;
+          };
+          settings.formatter.mdformat = {
+            excludes = [ "presentation.md" ];
+            number = true;
+            wrap = 80;
           };
         })
       );
@@ -188,6 +199,36 @@
       templates.default = {
         description = "This repo can be used as a template";
         path = ./.;
+      };
+
+      # homeManager configurations to be used with eg. `home-manager switch --flake .#x86_64-linux`
+      homeConfigurations = eachSystem (
+        pkgs:
+        home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          modules = [ self.homeManagerModules.default ];
+        }
+      );
+
+      # homeManager modules
+      homeManagerModules.default = _: {
+        programs.direnv = {
+          enable = true;
+          enableBashIntegration = true;
+          enableZshIntegration = true;
+          enableFishIntegration = true;
+          enableNushellIntegration = true;
+          nix-direnv.enable = true;
+          config = {
+            strict_env = true;
+            load_dotenv = true;
+          };
+        };
+        home = rec {
+          username = "alice";
+          homeDirectory = "/home/${username}";
+          stateVersion = "25.05";
+        };
       };
     };
 }
