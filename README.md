@@ -63,6 +63,7 @@ Or you can just try it out in the [codespace](https://literate-guide-rpq69g9q977
 - [NixOS and flakes book](https://nixos-and-flakes.thiscute.world/)
 - [nixpkgs search](https://search.nixos.org)
 - [search tool for nix functions (like hoogle)](https://noogle.dev)
+- [cheatsheet](https://nixcademy.com/cheatsheet/)
 
 ## License
 

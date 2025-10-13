@@ -50,7 +50,18 @@
         "x86_64-darwin"
       ];
       # a helper function to map all the configurations to each system
-      eachSystem = f: nixpkgs.lib.genAttrs systems (system: f (import nixpkgs { inherit system; }));
+      eachSystem =
+        f:
+        nixpkgs.lib.genAttrs systems (
+          system:
+          f (
+            import nixpkgs {
+              inherit system;
+              config = { };
+              overlays = [ ];
+            }
+          )
+        );
 
       # our treefmt config
       treefmt = eachSystem (
