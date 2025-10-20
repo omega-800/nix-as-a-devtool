@@ -12,9 +12,6 @@ paging: page %d / %d
 
 This project aims to show how nix can integrate into the software-development workflow in various stages.    
 
-```sh
-git clone https://github.com/omega-800/nix-as-a-devtool
-```
 ---
 
 ## Getting Started
@@ -65,21 +62,6 @@ Or you can just try it out in the [codespace](https://literate-guide-rpq69g9q977
 
 ---
 
-## Flake anatomy
-
-```nix
-{
-  inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-  };
-  outputs = inputs: {
-  
-  };
-}
-```
-
----
-
 ## Resources
 
 - [flake anatomy](https://vtimofeenko.com/posts/practical-nix-flake-anatomy-a-guided-tour-of-flake.nix/)
@@ -89,3 +71,13 @@ Or you can just try it out in the [codespace](https://literate-guide-rpq69g9q977
 - [nixpkgs search](https://search.nixos.org)
 - [search tool for nix functions (like hoogle)](https://noogle.dev)
 - [cheatsheet](https://nixcademy.com/cheatsheet/)
+
+--- 
+
+## Practice session
+
+Let's try to create a c development environment and package an application together!
+
+```sh
+git clone https://www.github.com/omega-800/nix-c-example
+```

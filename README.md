@@ -11,7 +11,8 @@
 
 ## About
 
-This project aims to show how nix can integrate into the software-development workflow in various stages.
+This project aims to show how nix can integrate into the software-development workflow in various stages.\
+You can practice implementing a c development environment with [this repository](https://github.com/omega-800/nix-c-example).
 
 ## Getting Started
 
